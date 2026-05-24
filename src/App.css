@@ -1,0 +1,411 @@
+/* ════════════════════════════════════════════════════════════════════════════
+   App.css – Global styles for SitePulse
+   Uses CSS custom properties for theming; pairs with Ant Design dark algorithm.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── Reset / Base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --accent:        #7c6fcd;
+  --accent-light:  #a594f9;
+  --bg-deep:       #0f1117;
+  --bg-card:       #1a1f2e;
+  --bg-card-hover: #202536;
+  --border:        rgba(255,255,255,0.07);
+  --text-muted:    rgba(255,255,255,0.45);
+  --glow:          rgba(124,111,205,0.25);
+}
+
+body {
+  margin: 0;
+  background: var(--bg-deep);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.app-layout {
+  min-height: 100vh;
+  background: var(--bg-deep) !important;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.app-header {
+  background: rgba(15,17,23,0.85) !important;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 !important;
+  height: auto !important;
+  line-height: 1 !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent), #a594f9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: 0 4px 20px var(--glow);
+  flex-shrink: 0;
+}
+
+.header-title {
+  margin: 0 !important;
+  color: #e2e8f0 !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.3px;
+}
+
+.header-sub {
+  color: var(--text-muted) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.beta-tag {
+  font-size: 11px !important;
+  letter-spacing: 1px;
+}
+
+/* ── Content ──────────────────────────────────────────────────────────────── */
+.app-content {
+  padding: 0;
+}
+
+.content-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+
+/* ── Sections ─────────────────────────────────────────────────────────────── */
+.section {
+  margin-bottom: 10px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.section-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--glow);
+}
+
+.section-title {
+  color: #c4cad6 !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
+  letter-spacing: -0.2px;
+}
+
+.section-divider {
+  border-color: var(--border) !important;
+  margin: 36px 0 !important;
+}
+
+/* ── Add Form ─────────────────────────────────────────────────────────────── */
+.add-form-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px 20px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0 24px;
+}
+
+.form-label {
+  color: #c4cad6;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-input {
+  border-radius: 10px !important;
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-input:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 2px var(--glow) !important;
+}
+
+.form-input.mono input {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+}
+
+.selector-hint {
+  color: var(--accent-light);
+  font-size: 12px;
+  cursor: help;
+  border-bottom: 1px dashed var(--accent-light);
+}
+
+.add-btn {
+  border-radius: 10px !important;
+  background: linear-gradient(135deg, var(--accent), #9b8cf7) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+  height: 44px !important;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px var(--glow) !important;
+}
+
+.add-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--glow) !important;
+}
+
+/* ── Site Cards ───────────────────────────────────────────────────────────── */
+.site-card {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 16px !important;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  height: 100%;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+
+.site-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,111,205,0.2) !important;
+  border-color: rgba(124,111,205,0.3) !important;
+}
+
+/* Changed state – amber glow border */
+.site-card--changed {
+  border-color: rgba(250,173,20,0.5) !important;
+  box-shadow: 0 0 0 2px rgba(250,173,20,0.15), 0 2px 16px rgba(0,0,0,0.25) !important;
+  animation: card-glow 3s ease-in-out infinite;
+}
+
+@keyframes card-glow {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(250,173,20,0.15), 0 2px 16px rgba(0,0,0,0.25); }
+  50%       { box-shadow: 0 0 0 4px rgba(250,173,20,0.30), 0 4px 24px rgba(0,0,0,0.35); }
+}
+
+/* ── CHANGED banner ───────────────────────────────────────────────────────── */
+.changed-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(250,173,20,0.1);
+  border: 1px solid rgba(250,173,20,0.3);
+  border-radius: 8px;
+  padding: 7px 12px;
+  margin-bottom: 12px;
+  animation: slide-in 0.3s ease;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.changed-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #faad14;
+  flex-shrink: 0;
+  animation: dot-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1);   opacity: 1;   }
+  50%       { transform: scale(1.5); opacity: 0.6; }
+}
+
+.changed-text {
+  color: #faad14 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  flex: 1;
+}
+
+.dismiss-btn {
+  color: rgba(255,255,255,0.4) !important;
+  font-size: 11px !important;
+  height: auto !important;
+  padding: 0 4px !important;
+}
+
+.dismiss-btn:hover {
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* ── AUTO tag ─────────────────────────────────────────────────────────────── */
+.auto-tag {
+  font-size: 10px !important;
+  letter-spacing: 0.5px;
+  animation: tag-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes tag-breathe {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.65; }
+}
+
+/* ── Interval row ─────────────────────────────────────────────────────────── */
+.interval-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 8px;
+}
+
+.interval-select {
+  min-width: 140px;
+}
+
+.interval-select .ant-select-selector {
+  background: rgba(255,255,255,0.04) !important;
+  border-color: rgba(255,255,255,0.1) !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+}
+
+.interval-select:hover .ant-select-selector {
+  border-color: var(--accent) !important;
+}
+
+/* Card header line */
+.site-card .ant-card-head {
+  border-bottom: 1px solid var(--border) !important;
+  padding: 14px 20px !important;
+  min-height: unset !important;
+}
+
+.site-card .ant-card-body {
+  padding: 20px !important;
+}
+
+/* Refresh button */
+.refresh-btn {
+  background: linear-gradient(135deg, var(--accent), #9b8cf7) !important;
+  border: none !important;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.refresh-btn:hover {
+  transform: rotate(30deg) scale(1.08);
+}
+
+/* Delete button */
+.delete-btn {
+  transition: transform 0.15s;
+}
+
+.delete-btn:hover {
+  transform: scale(1.08);
+}
+
+/* ── Card Fields ──────────────────────────────────────────────────────────── */
+.card-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.field-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+/* ── Tracked Value Box ────────────────────────────────────────────────────── */
+.tracked-value-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin: 14px 0 10px;
+  min-height: 54px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.tracked-value-text {
+  color: #e2e8f0 !important;
+  font-size: 15px !important;
+  font-weight: 500;
+  margin: 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* ── Card Footer ──────────────────────────────────────────────────────────── */
+.card-footer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Empty State ──────────────────────────────────────────────────────────── */
+.empty-state {
+  padding: 60px 0;
+  opacity: 0.7;
+}
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.app-footer {
+  background: transparent !important;
+  text-align: center;
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive tweaks ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .content-inner { padding: 24px 16px; }
+  .header-inner  { padding: 12px 16px; }
+  .add-form-container { padding: 20px 16px; }
+}
+
+@media (max-width: 480px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
