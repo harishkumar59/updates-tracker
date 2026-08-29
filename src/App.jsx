@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { RadarChartOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid';
+import { Analytics } from '@vercel/analytics/react';
 import AddSiteForm from './components/AddSiteForm';
 import SiteCard from './components/SiteCard';
 import { loadSites, saveSites } from './utils/localStorage';
@@ -191,6 +192,7 @@ export default function App() {
         </Footer>
 
       </Layout>
+      <Analytics />
     </ConfigProvider>
   );
 }
