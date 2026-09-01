@@ -87,7 +87,7 @@ export async function fetchSiteValue(targetUrl, cssSelector) {
     } catch (err) {
       // Record the error and try the next proxy.
       lastError = err;
-      console.warn(`[SitePulse] Proxy attempt failed:`, err.message);
+      console.warn(`[ExamPulse] Proxy attempt failed:`, err.message);
     }
   }
 

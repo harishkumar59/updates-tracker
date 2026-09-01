@@ -1,5 +1,5 @@
 // ─── useAutoRefresh ──────────────────────────────────────────────────────────
-// Custom hook that manages a background setInterval for every tracked site
+// Custom hook that manages a background setInterval for every tracked exam
 // whose autoRefreshInterval > 0.
 //
 // Design decisions:
@@ -11,22 +11,24 @@
 //    actually changes (the `intervalKey` dependency). A plain value update
 //    (e.g. lastKnownValue changing after a fetch) does NOT reset the timers.
 //
-//  • Browser Notification API is used when the value changes. The caller
-//    (App.jsx) must have already called Notification.requestPermission() once.
+//  • Notification dispatch is handled via notificationService.
+//    The caller (App.jsx) must have already requested permission once.
 
 import { useEffect, useRef } from 'react';
 import { fetchSiteValue } from '../utils/fetcher';
+import { dispatchNotifications } from '../utils/notificationService';
+import { loadSettings } from '../utils/localStorage';
 
 /**
- * Registers/clears setInterval timers for every site that has an
- * autoRefreshInterval > 0.  Fires a browser Notification on value change.
+ * Registers/clears setInterval timers for every tracker that has an
+ * autoRefreshInterval > 0. Fires notifications on value change.
  *
- * @param {Array}    sites    - The full tracked-sites array from state.
+ * @param {Array}    sites    - The full tracked-exams array from state.
  * @param {Function} onUpdate - Same callback as in App: (id, patch) => void.
  */
 export function useAutoRefresh(sites, onUpdate) {
   // Always-current refs so interval callbacks never capture stale values.
-  const sitesRef   = useRef(sites);
+  const sitesRef    = useRef(sites);
   const onUpdateRef = useRef(onUpdate);
 
   useEffect(() => { sitesRef.current   = sites;    }, [sites]);
@@ -60,26 +62,46 @@ export function useAutoRefresh(sites, onUpdate) {
           );
 
           const changed = newValue !== current.lastKnownValue;
+          const now = new Date().toISOString();
+
+          // Build history entry if changed
+          const historyEntry = changed
+            ? {
+                timestamp: now,
+                oldValue: current.lastKnownValue,
+                newValue,
+                type: current.monitorType || 'other',
+              }
+            : null;
 
           onUpdateRef.current(current.id, {
             lastKnownValue:       newValue,
-            lastUpdatedTimestamp: new Date().toISOString(),
+            previousValue:        changed ? current.lastKnownValue : current.previousValue,
+            lastUpdatedTimestamp:  now,
+            lastChangedTimestamp:  changed ? now : current.lastChangedTimestamp,
             hasChanged:           changed,
+            status:               'monitoring',
+            errorMessage:         null,
+            ...(historyEntry ? { historyEntry } : {}),
           });
 
-          // ── Browser desktop notification ────────────────────────────────
-          if (changed && 'Notification' in window && Notification.permission === 'granted') {
-            new Notification(`SitePulse · ${current.siteName} updated!`, {
-              body: newValue.slice(0, 120),
-              icon: '/favicon.ico',
-              tag:  current.id, // de-duplicates: a new notif replaces the old one
-            });
+          // ── Dispatch notifications ────────────────────────────────────
+          if (changed) {
+            const settings = loadSettings();
+            dispatchNotifications(
+              { ...current, lastKnownValue: newValue, previousValue: current.lastKnownValue },
+              settings
+            );
           }
         } catch (err) {
-          // Silently log auto-refresh failures — don't show error on the card
-          // (the user didn't explicitly trigger this fetch).
+          // Update status to error but don't break the card
+          onUpdateRef.current(current.id, {
+            status: 'error',
+            errorMessage: err.message,
+            lastUpdatedTimestamp: new Date().toISOString(),
+          });
           console.warn(
-            `[SitePulse] Auto-refresh failed for "${current.siteName}":`,
+            `[ExamPulse] Auto-refresh failed for "${current.siteName}":`,
             err.message
           );
         }
